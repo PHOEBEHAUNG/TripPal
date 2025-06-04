@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">TripPal</string>
+    <string name="title_airport_code_khh">KHH</string>
+
+    <string name="title_flight">Flight</string>
+    <string name="title_rate">Rate</string>
+
+    <string name="title_estimated_arrive_time">Estimated Time</string>
+    <string name="title_arrive_time">Time</string>
+    <string name="title_plane_number">Plane Number</string>
+    <string name="title_gate">Gate</string>
+
+    <string name="title_status_arrived">Arrived</string>
+    <string name="title_status_departure">Departure</string>
+    <string name="title_status_on_time">On Time</string>
+    <string name="title_status_cancelled">Cancelled</string>
+
+    <string name="title_last_updated">Last Updated: </string>
+    <string name="title_no_flight_information_available">No flight information available</string>
+
+
+
 </resources>

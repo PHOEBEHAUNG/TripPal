@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">旅寶</string>
+    <string name="title_airport_code_khh">KHH</string>
+
+    <string name="title_flight">航班</string>
+    <string name="title_rate">匯率</string>
+
+    <string name="title_estimated_arrive_time">預計抵達時間</string>
+    <string name="title_arrive_time">實際抵達</string>
+    <string name="title_plane_number">航班</string>
+    <string name="title_gate">登機門</string>
+
+    <string name="title_status_arrived">抵達</string>
+    <string name="title_status_departure">離開</string>
+    <string name="title_status_on_time">準時</string>
+    <string name="title_status_cancelled">取消</string>
+
+    <string name="title_last_updated">上次更新時間:</string>
+    <string name="title_no_flight_information_available">尚無航班資訊</string>
+
+</resources>

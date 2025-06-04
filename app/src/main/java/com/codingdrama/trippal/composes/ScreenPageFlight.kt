@@ -1,0 +1,107 @@
+package com.codingdrama.trippal.composes
+
+import android.content.Context
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import com.codingdrama.trippal.R
+import com.codingdrama.trippal.model.utils.TimeUtils
+import com.codingdrama.trippal.viewnodel.FlightMainViewModel
+
+// FlightScreen.kt
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FlightScreen(modifier: Modifier = Modifier, context: Context = LocalContext.current, flightViewModel: FlightMainViewModel) {
+    val instantSchedules by flightViewModel.instantSchedules.collectAsState()
+    val lastUpdateTime by flightViewModel.lastUpdateTime.collectAsState()
+
+    Column(modifier = modifier.fillMaxSize()) {
+        // show a top bar with refresh time and a button to refresh the flight information
+        Box(modifier = modifier.fillMaxWidth()) {
+            // Top Bar with Refresh Button
+            LazyRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                item {
+                    Text(
+                        text = context.getString(R.string.title_last_updated) + TimeUtils.getTimeFullString(lastUpdateTime),
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(20.dp, 10.dp, 20.dp, 0.dp)
+                    )
+                }
+                item {
+                    IconButton(
+                        modifier = Modifier.padding(20.dp, 10.dp, 20.dp, 0.dp),
+                        onClick = { flightViewModel.getFlightInfo() },
+                    ) {
+                        Icon(
+                            modifier = Modifier.height(24.dp).width(24.dp),
+                            painter = painterResource(R.drawable.icon_refresh),
+                            contentDescription = "Refresh Flight Information",
+                        )
+                    }
+                }
+            }
+        }
+
+        if (instantSchedules == null || instantSchedules?.instantSchedules?.isEmpty() == true) {
+            Box(
+                modifier = modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = context.getString(R.string.title_no_flight_information_available),
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.fillMaxSize(),
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                )
+            }
+        } else {
+            val state = rememberPullToRefreshState()
+            var isRefreshing by remember { mutableStateOf(false) }
+            PullToRefreshBox(
+                state = state,
+                isRefreshing = isRefreshing,
+                onRefresh = {
+                    isRefreshing = true
+                    flightViewModel.getFlightInfo()
+                    isRefreshing = false
+                },
+                modifier = modifier
+            ) {
+                LazyColumn {
+                    items(instantSchedules?.instantSchedules!!.size) { index ->
+                        val flightInfo = instantSchedules?.instantSchedules!![index]
+                        CardFlightInfo(instantSchedule = flightInfo)
+                    }
+                }
+            }
+        }
+    }
+}
