@@ -3,7 +3,7 @@ package com.codingdrama.trippal.viewnodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codingdrama.trippal.data.CurrencyEnum
-import com.codingdrama.trippal.model.network.interfaces.CurrencyDetailsResponse
+import com.codingdrama.trippal.model.network.data.CurrencyDetailsResponse
 import com.codingdrama.trippal.repository.CurrencyRateRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -2,8 +2,8 @@ package com.codingdrama.trippal.repository
 
 import com.codingdrama.trippal.data.CurrencyEnum
 import com.codingdrama.trippal.model.network.ApiClient
-import com.codingdrama.trippal.model.network.interfaces.CurrencyDetailsResponse
-import com.codingdrama.trippal.model.network.interfaces.CurrencyResponse
+import com.codingdrama.trippal.model.network.data.CurrencyDetailsResponse
+import com.codingdrama.trippal.model.network.data.CurrencyResponse
 
 class CurrencyRateRepository(private val apiClient: ApiClient) {
     suspend fun getSupportedCurrencies(): CurrencyDetailsResponse? {

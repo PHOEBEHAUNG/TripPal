@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.codingdrama.trippal.model.network.interfaces.CurrencyDetails
+import com.codingdrama.trippal.model.network.data.CurrencyDetails
 
 @Composable
 fun CardCurrencyInfo(modifier: Modifier = Modifier, context: Context = LocalContext.current, currencyDetails: CurrencyDetails, rate: Float) {
