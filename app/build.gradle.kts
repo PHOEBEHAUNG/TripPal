@@ -19,8 +19,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "CURRENCY_API_KEY", "\"${project.property("currency_api_key")}\"")
+            isMinifyEnabled = false
+        }
         release {
             isMinifyEnabled = false
+            buildConfigField("String", "CURRENCY_API_KEY", "\"${project.property("currency_api_key")}\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -35,6 +40,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        android.buildFeatures.buildConfig = true
         compose = true
     }
 }
