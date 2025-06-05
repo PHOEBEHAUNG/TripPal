@@ -27,7 +27,7 @@ class FlightMainViewModel (private val repository: FlightInfoRepository) : ViewM
         viewModelScope.launch(Dispatchers.IO) {
             while (true) {
                 if (System.currentTimeMillis() - lastUpdateTime.value < 10000) {
-                    Log.d(TAG, "Skipping fetch, last update was less than 10 seconds ago.")
+//                    Log.d(TAG, "Skipping fetch, last update was less than 10 seconds ago.")
                     continue
                 }
 
