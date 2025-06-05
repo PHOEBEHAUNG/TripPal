@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.codingdrama.trippal.R
 import com.codingdrama.trippal.model.network.data.InstantSchedule
+import com.codingdrama.trippal.ui.theme.*
 
 enum class CardType {
     DEPARTURE, ARRIVAL
@@ -98,12 +99,12 @@ fun CardFlightInfo (modifier: Modifier = Modifier, context: Context = LocalConte
             Spacer(modifier = Modifier.height(12.dp))
 
             // Flight Number and Boarding Gate Information
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(context.getString(R.string.title_plane_number) + " : ", style = MaterialTheme.typography.labelSmall)
                 Text(instantSchedule.airLineNum, style = MaterialTheme.typography.bodyMedium)
             }
 
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(context.getString(R.string.title_gate) + " : ", style = MaterialTheme.typography.labelSmall)
                 Text(instantSchedule.airBoardingGate, style = MaterialTheme.typography.bodyMedium)
             }
@@ -112,10 +113,10 @@ fun CardFlightInfo (modifier: Modifier = Modifier, context: Context = LocalConte
 
             // Status Information
             val statusColor = when {
-                instantSchedule.airFlyStatus.contains("Arrived", ignoreCase = true) -> Color(0xFF00C853)
-                instantSchedule.airFlyStatus.contains("Departed", ignoreCase = true) -> Color(0xFF00C853)
-                instantSchedule.airFlyStatus.contains("On Time", ignoreCase = true) -> Color(0xFFDDAA00)
-                instantSchedule.airFlyStatus.contains("Cancelled", ignoreCase = true) -> Color(0xFFD50000)
+                instantSchedule.airFlyStatus.contains("Arrived", ignoreCase = true) -> cardFlightInfoStatusNormal
+                instantSchedule.airFlyStatus.contains("Departed", ignoreCase = true) -> cardFlightInfoStatusNormal
+                instantSchedule.airFlyStatus.contains("On Time", ignoreCase = true) -> cardFlightInfoStatusOnTime
+                instantSchedule.airFlyStatus.contains("Cancelled", ignoreCase = true) -> cardFlightInfoStatusCancel
                 else -> Color.Gray
             }
 

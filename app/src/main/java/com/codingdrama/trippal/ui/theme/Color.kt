@@ -217,3 +217,9 @@ val surfaceContainerLowDarkHighContrast = Color(0xFF241E23)
 val surfaceContainerDarkHighContrast = Color(0xFF352E33)
 val surfaceContainerHighDarkHighContrast = Color(0xFF40393F)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF4C454A)
+
+
+//---------------------------------------------------------//
+val cardFlightInfoStatusNormal = Color(0xFF00C853)
+val cardFlightInfoStatusOnTime = Color(0xFFDDAA00)
+val cardFlightInfoStatusCancel = Color(0xFFD50000)

@@ -60,7 +60,7 @@ fun NavigationTabFlightInfo(modifier: Modifier = Modifier, flightViewModel: Flig
                     )
                 }
             }
-            AppNavHost(navController, startDestination, modifier = modifier.padding(contentPadding).weight(1.0f), flightViewModel)
+            AppNavHost(navController, startDestination, modifier = modifier.weight(1.0f), flightViewModel)
         }
     }
 }
