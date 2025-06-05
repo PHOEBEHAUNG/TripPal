@@ -4,12 +4,10 @@ import android.content.Context
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
@@ -43,15 +41,11 @@ fun BottomNavigationBar(modifier: Modifier = Modifier, context: Context = LocalC
         )
     )
 
-    NavigationBar(
-        // set background color
-        containerColor = Color(0xFF0F9D58)
-    ) {
+    NavigationBar {
         // observe the backstack
         val navBackStackEntry by navController.currentBackStackEntryAsState()
 
         // observe current route to change the icon
-        // color,label color when navigated
         val currentRoute = navBackStackEntry?.destination?.route
 
         // Bottom nav items we declared
@@ -72,14 +66,7 @@ fun BottomNavigationBar(modifier: Modifier = Modifier, context: Context = LocalC
                 label = {
                     Text(text = navItem.title)
                 },
-                alwaysShowLabel = false,
-
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color.White, // Icon color when selected
-                    unselectedIconColor = Color.White, // Icon color when not selected
-                    selectedTextColor = Color.White, // Label color when selected
-                    indicatorColor = Color(0xFF195334) // Highlight color for selected item
-                )
+                alwaysShowLabel = false
             )
         }
     }

@@ -36,7 +36,6 @@ fun CardFlightInfo (modifier: Modifier = Modifier, context: Context = LocalConte
             .absolutePadding(20.dp, 10.dp, 20.dp, 10.dp),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(
             modifier = Modifier

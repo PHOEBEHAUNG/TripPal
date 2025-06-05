@@ -26,7 +26,6 @@ fun CardCurrencyInfo(modifier: Modifier = Modifier, context: Context = LocalCont
             .absolutePadding(20.dp, 10.dp, 20.dp, 10.dp),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             Text(
