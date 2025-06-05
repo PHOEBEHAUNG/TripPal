@@ -19,8 +19,11 @@ class FlightMainViewModel (private val repository: FlightInfoRepository) : ViewM
     private val _lastUpdateTime = MutableStateFlow(0L)
     val lastUpdateTime: StateFlow<Long> = _lastUpdateTime.asStateFlow()
 
-    private val _instantSchedules = MutableStateFlow<InstantSchedules?>(null)
-    val instantSchedules: StateFlow<InstantSchedules?> = _instantSchedules.asStateFlow()
+    private val _instantSchedulesDeparture = MutableStateFlow<InstantSchedules?>(null)
+    val instantSchedulesDeparture: StateFlow<InstantSchedules?> = _instantSchedulesDeparture.asStateFlow()
+
+    private val _instantSchedulesArrive = MutableStateFlow<InstantSchedules?>(null)
+    val instantSchedulesArrive: StateFlow<InstantSchedules?> = _instantSchedulesArrive.asStateFlow()
 
     init {
         // create a task to getFlightInfo every 10 seconds
@@ -32,17 +35,26 @@ class FlightMainViewModel (private val repository: FlightInfoRepository) : ViewM
                 }
 
                 Log.d(TAG, "Fetching flight info...")
-                getFlightInfo()
+                getFlightInfoArrives()
+                getFlightInfoDepartures()
                 delay(10000) // 10 seconds
             }
         }
     }
 
-    fun getFlightInfo() {
+    fun getFlightInfoArrives() {
         viewModelScope.launch {
             _lastUpdateTime.value = System.currentTimeMillis()
-            _instantSchedules.value = repository.getFlightInfoArrive()
-            Log.d(TAG, "Flight Info: ${_instantSchedules.value?.instantSchedules?.size}")
+            _instantSchedulesArrive.value = repository.getFlightInfoArrive()
+            Log.d(TAG, "Flight Info Arrives: ${_instantSchedulesArrive.value?.instantSchedules?.size}")
+        }
+    }
+
+    fun getFlightInfoDepartures() {
+        viewModelScope.launch {
+            _lastUpdateTime.value = System.currentTimeMillis()
+            _instantSchedulesDeparture.value = repository.getFlightInfoDeparture()
+            Log.d(TAG, "Flight Info Departures: ${_instantSchedulesDeparture.value?.instantSchedules?.size}")
         }
     }
 }

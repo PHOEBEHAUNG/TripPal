@@ -24,8 +24,12 @@ import androidx.compose.ui.unit.dp
 import com.codingdrama.trippal.R
 import com.codingdrama.trippal.model.network.data.InstantSchedule
 
+enum class CardType {
+    DEPARTURE, ARRIVAL
+}
+
 @Composable
-fun CardFlightInfo (modifier: Modifier = Modifier, context: Context = LocalContext.current, instantSchedule: InstantSchedule) {
+fun CardFlightInfo (modifier: Modifier = Modifier, context: Context = LocalContext.current, instantSchedule: InstantSchedule, cardType: CardType) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -68,13 +72,27 @@ fun CardFlightInfo (modifier: Modifier = Modifier, context: Context = LocalConte
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(instantSchedule.upAirportCode, style = MaterialTheme.typography.titleMedium)
+                    if (cardType == CardType.DEPARTURE) {
+                        Text(context.getString(R.string.title_airport_code_khh), style = MaterialTheme.typography.titleMedium)
+                    } else {
+                        if (instantSchedule.upAirportCode != null && instantSchedule.upAirportCode?.isEmpty() == false)
+                            Text(instantSchedule.upAirportCode!!, style = MaterialTheme.typography.titleMedium)
+                        else
+                            Text("UNKNOWN CODE", style = MaterialTheme.typography.titleMedium)
+                    }
                 }
 
                 Text("|", style = MaterialTheme.typography.bodyMedium)
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(context.getString(R.string.title_airport_code_khh), style = MaterialTheme.typography.titleMedium)
+                    if (cardType == CardType.ARRIVAL) {
+                        Text(context.getString(R.string.title_airport_code_khh), style = MaterialTheme.typography.titleMedium)
+                    } else {
+                        if (instantSchedule.goalAirportCode != null && instantSchedule.goalAirportCode?.isEmpty() == false)
+                            Text(instantSchedule.goalAirportCode!!, style = MaterialTheme.typography.titleMedium)
+                        else
+                            Text("UNKNOWN CODE", style = MaterialTheme.typography.titleMedium)
+                    }
                 }
             }
 
