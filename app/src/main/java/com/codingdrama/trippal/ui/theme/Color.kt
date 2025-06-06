@@ -1,6 +1,7 @@
 package com.codingdrama.trippal.ui.theme
 
 import androidx.compose.ui.graphics.Color
+// generate from https://material-foundation.github.io/material-theme-builder/
 
 val primaryLight = Color(0xFF7E4E7C)
 val onPrimaryLight = Color(0xFFFFFFFF)
