@@ -1,10 +1,10 @@
 package com.codingdrama.trippal.repository
 
-import com.codingdrama.trippal.model.network.ApiClient
+import com.codingdrama.trippal.model.network.KiaApiClient
 import com.codingdrama.trippal.model.network.ErrorCode
 import com.codingdrama.trippal.model.network.data.InstantSchedules
 
-class FlightInfoRepository (private val apiClient: ApiClient) {
+class FlightInfoRepository (private val apiClient: KiaApiClient) {
     suspend fun getFlightInfoArrive(): InstantSchedules {
         val domestic = apiClient.kiaApiService.getFlightInfoDomesticArrive()
         val international = apiClient.kiaApiService.getFlightInfoInternationalArrive()

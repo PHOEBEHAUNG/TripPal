@@ -19,7 +19,8 @@ import com.codingdrama.trippal.composes.BottomNavigationBar
 import com.codingdrama.trippal.composes.FlightScreen
 import com.codingdrama.trippal.composes.RateScreen
 import com.codingdrama.trippal.composes.Screen
-import com.codingdrama.trippal.model.network.ApiClient
+import com.codingdrama.trippal.model.network.CurrencyApiClient
+import com.codingdrama.trippal.model.network.KiaApiClient
 import com.codingdrama.trippal.repository.CurrencyRateRepository
 import com.codingdrama.trippal.repository.FlightInfoRepository
 import com.codingdrama.trippal.ui.theme.TripPalTheme
@@ -27,8 +28,8 @@ import com.codingdrama.trippal.viewnodel.FlightMainViewModel
 import com.codingdrama.trippal.viewnodel.RateViewModel
 
 class MainActivity : ComponentActivity() {
-    val flightViewModel: FlightMainViewModel = FlightMainViewModel(FlightInfoRepository(ApiClient))
-    val rateViewModel: RateViewModel = RateViewModel(CurrencyRateRepository(ApiClient))
+    val flightViewModel: FlightMainViewModel = FlightMainViewModel(FlightInfoRepository(KiaApiClient))
+    val rateViewModel: RateViewModel = RateViewModel(CurrencyRateRepository(CurrencyApiClient))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,11 +1,11 @@
 package com.codingdrama.trippal.repository
 
 import com.codingdrama.trippal.data.CurrencyEnum
-import com.codingdrama.trippal.model.network.ApiClient
+import com.codingdrama.trippal.model.network.CurrencyApiClient
 import com.codingdrama.trippal.model.network.data.CurrencyDetailsResponse
 import com.codingdrama.trippal.model.network.data.CurrencyResponse
 
-class CurrencyRateRepository(private val apiClient: ApiClient) {
+class CurrencyRateRepository(private val apiClient: CurrencyApiClient) {
     suspend fun getSupportedCurrencies(): CurrencyDetailsResponse? {
         val response = apiClient.currencyApiService.getSupportedCurrencies()
         return response
