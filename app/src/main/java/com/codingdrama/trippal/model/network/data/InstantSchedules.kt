@@ -63,3 +63,9 @@ data class InstantSchedule(
 data class InstantSchedules (
     @SerializedName("InstantSchedule") val instantSchedules: List<InstantSchedule>
 )
+
+data class InstantSchedulesResponse (
+    val data: InstantSchedules?,
+    val message: String,
+    val errorCode: Int
+)
