@@ -59,6 +59,7 @@ class RateViewModel(private val repository: CurrencyRateRepository) : ViewModel(
 
     fun updateCurrencyRates() {
         viewModelScope.launch(Dispatchers.IO) {
+            _lastUpdateTime.value = System.currentTimeMillis()
             val response = repository.getAllLatestCurrencyRates(_currentBaseCurrency.value)
             if (response != null) {
                 _currencyRates.value = response.data
