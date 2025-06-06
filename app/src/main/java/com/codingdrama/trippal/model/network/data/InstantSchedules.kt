@@ -50,7 +50,7 @@ data class InstantSchedule(
     val airLineLogo: String,
     val airLineUrl: String,
     val airLineNum: String,
-    var upAirportCode: String?,
+    val upAirportCode: String?,
     val upAirportName: String?,
     var goalAirportCode: String?,
     val goalAirportName: String?,

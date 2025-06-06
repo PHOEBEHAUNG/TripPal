@@ -68,22 +68,6 @@ fun FlightScreen(modifier: Modifier = Modifier, context: Context = LocalContext.
                 }
             }
         }
-
-        if (instantSchedulesArrive == null || instantSchedulesArrive?.instantSchedules?.isEmpty() == true
-            || instantSchedulesDeparture == null || instantSchedulesDeparture?.instantSchedules?.isEmpty() == true) {
-            Box(
-                modifier = modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = context.getString(R.string.title_no_flight_information_available),
-                    style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
-                )
-            }
-        } else {
-            NavigationTabFlightInfo(modifier = modifier, flightViewModel = flightViewModel)
-        }
+        NavigationTabFlightInfo(modifier = modifier, flightViewModel = flightViewModel)
     }
 }
