@@ -19,13 +19,14 @@ import androidx.compose.ui.unit.dp
 import com.codingdrama.trippal.model.network.data.CurrencyDetails
 
 @Composable
-fun CardCurrencyInfo(modifier: Modifier = Modifier, context: Context = LocalContext.current, currencyDetails: CurrencyDetails, rate: Float) {
+fun CardCurrencyInfo(modifier: Modifier = Modifier, context: Context = LocalContext.current, currencyDetails: CurrencyDetails, rate: Float, onClick: (Float) -> Unit) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .absolutePadding(20.dp, 10.dp, 20.dp, 10.dp),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(4.dp),
+        onClick = { onClick(rate) },
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             Text(
@@ -57,6 +58,7 @@ fun PreviewCardCurrencyInfo() {
 
     CardCurrencyInfo(
         currencyDetails = fakeCurrencyDetails,
-        rate = 1.0f
+        rate = 1.0f,
+        onClick = {}
     )
 }

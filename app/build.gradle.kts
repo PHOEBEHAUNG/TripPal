@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.converter.gson)
     implementation(libs.material3)
+    implementation(libs.androidx.constraintlayout.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

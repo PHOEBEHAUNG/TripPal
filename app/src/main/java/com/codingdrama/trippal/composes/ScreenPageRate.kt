@@ -6,18 +6,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.codingdrama.trippal.viewnodel.RateViewModel
 
 @Composable
 fun RateScreen(modifier: Modifier = Modifier, context: Context = LocalContext.current, rateViewModel: RateViewModel) {
+    var calculatorRate by remember { mutableStateOf(-1.0f) }
     Column(modifier = modifier.fillMaxSize()) {
         val currentBaseCurrency by rateViewModel.currentBaseCurrency.collectAsState()
         val supportedCurrenciesList by rateViewModel.supportedCurrenciesList.collectAsState()
@@ -42,10 +48,23 @@ fun RateScreen(modifier: Modifier = Modifier, context: Context = LocalContext.cu
                         CardCurrencyInfo(
                             modifier = Modifier.padding(8.dp),
                             currencyDetails = supportedCurrencies?.data?.get(currency)!!,
-                            rate = rate
+                            rate = rate,
+                            onClick = { selectedRate ->
+                                calculatorRate = selectedRate
+                            }
                         )
                     }
                 }
+            }
+        }
+
+        if (calculatorRate != -1.0f) {
+            Dialog(onDismissRequest = { calculatorRate = -1.0f }) {
+                CurrencyRateCalculator(
+                    modifier = modifier.wrapContentSize(),
+                    rate = calculatorRate, // Placeholder rate, replace with actual selected rate
+                    onDismiss = { calculatorRate = -1.0f }
+                )
             }
         }
     }
