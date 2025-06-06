@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.codingdrama.trippal.R
 import com.codingdrama.trippal.viewnodel.RateViewModel
 
 @Composable
@@ -40,22 +43,26 @@ fun RateScreen(modifier: Modifier = Modifier, context: Context = LocalContext.cu
             rateViewModel.updateCurrencyRates()
         }
 
-        // show currencies (Map<String, Float>) with card view
-        Box(modifier = Modifier.fillMaxSize().padding(16.dp, 0.dp, 16.dp, 16.dp)) {
-            LazyColumn {
-                currencyRates.forEach { (currency, rate) ->
-                    item {
-                        CardCurrencyInfo(
-                            modifier = Modifier.padding(8.dp),
-                            currencyDetails = supportedCurrencies?.data?.get(currency)!!,
-                            rate = rate,
-                            onClick = { selectedRate ->
-                                calculatorRate = selectedRate
-                            }
-                        )
+        if (currencyRates.isNotEmpty()) {
+            // show currencies (Map<String, Float>) with card view
+            Box(modifier = Modifier.fillMaxSize().padding(16.dp, 0.dp, 16.dp, 16.dp)) {
+                LazyColumn {
+                    currencyRates.forEach { (currency, rate) ->
+                        item {
+                            CardCurrencyInfo(
+                                modifier = Modifier.padding(8.dp),
+                                currencyDetails = supportedCurrencies?.data?.get(currency)!!,
+                                rate = rate,
+                                onClick = { selectedRate ->
+                                    calculatorRate = selectedRate
+                                }
+                            )
+                        }
                     }
                 }
             }
+        } else {
+            NoRateInformationBox(modifier = Modifier.fillMaxSize().padding(16.dp))
         }
 
         if (calculatorRate != -1.0f) {
@@ -67,5 +74,20 @@ fun RateScreen(modifier: Modifier = Modifier, context: Context = LocalContext.cu
                 )
             }
         }
+    }
+}
+
+@Composable
+fun NoRateInformationBox(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = LocalContext.current.getString(R.string.title_no_rate_information_available),
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+        )
     }
 }

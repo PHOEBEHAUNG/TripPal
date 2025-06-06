@@ -18,5 +18,6 @@
 
     <string name="title_last_updated">上次更新時間:</string>
     <string name="title_no_flight_information_available">尚無航班資訊</string>
+    <string name="title_no_rate_information_available">尚無匯率資訊</string>
 
 </resources>
