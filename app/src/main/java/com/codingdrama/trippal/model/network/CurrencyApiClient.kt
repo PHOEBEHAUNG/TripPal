@@ -42,6 +42,7 @@ object CurrencyApiClient {
                     .request(newRequest)
                     .code(200)
                     .message(ErrorCode.INTERNET.message)
+                    .protocol(okhttp3.Protocol.HTTP_1_1)
                     .body(body)
                     .build()
             }
