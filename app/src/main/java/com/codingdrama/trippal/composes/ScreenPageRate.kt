@@ -3,6 +3,7 @@ package com.codingdrama.trippal.composes
 import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,25 +23,37 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.codingdrama.trippal.R
+import com.codingdrama.trippal.model.utils.TimeUtils
 import com.codingdrama.trippal.viewnodel.RateViewModel
 
 @Composable
 fun RateScreen(modifier: Modifier = Modifier, context: Context = LocalContext.current, rateViewModel: RateViewModel) {
     var calculatorRate by remember { mutableStateOf(-1.0f) }
+    val lastUpdateTime by rateViewModel.lastUpdateTime.collectAsState()
+
     Column(modifier = modifier.fillMaxSize()) {
         val currentBaseCurrency by rateViewModel.currentBaseCurrency.collectAsState()
         val supportedCurrenciesList by rateViewModel.supportedCurrenciesList.collectAsState()
         val supportedCurrencies by rateViewModel.supportedCurrencies.collectAsState()
         val currencyRates by rateViewModel.currencyRates.collectAsState()
 
-        DropdownMenuCurrencies(
-            modifier = Modifier.fillMaxWidth().align(Alignment.End),
-            context = context,
-            currentBaseCurrency,
-            selections = supportedCurrenciesList ?: emptyList(),
-        ) {
-            rateViewModel.setDefaultBaseCurrency(it)
-            rateViewModel.updateCurrencyRates()
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = context.getString(R.string.title_last_updated) + TimeUtils.getTimeFullString(lastUpdateTime),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(20.dp, 10.dp, 20.dp, 0.dp)
+            )
+            DropdownMenuCurrencies(
+                modifier = Modifier.fillMaxWidth(),
+                context = context,
+                currentBaseCurrency,
+                selections = supportedCurrenciesList ?: emptyList(),
+            ) {
+                rateViewModel.setDefaultBaseCurrency(it)
+                rateViewModel.updateCurrencyRates()
+            }
         }
 
         if (currencyRates.isNotEmpty()) {
