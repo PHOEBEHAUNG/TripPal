@@ -30,7 +30,9 @@ data class CurrencyDetailsResponse(
     val data: Map<String, CurrencyDetails>
 )
 
-
+/**
+ * Currency Rate Response
+ */
 data class CurrencyResponse(
     val data: Map<String, Float>
 )
@@ -51,4 +53,10 @@ data class CurrencyDataErrorResponse(
     val message: String,
     val errors: Map<String, List<String>>,
     val info: String
+)
+
+data class CurrencyDataResponse (
+    val data: String?,
+    val message: String,
+    val errorCode: Int
 )

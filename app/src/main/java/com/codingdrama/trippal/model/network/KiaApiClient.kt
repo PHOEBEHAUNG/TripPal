@@ -32,7 +32,30 @@ object KiaApiClient {
     class KIAResponseInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             val request = chain.request()
-            val response = chain.proceed(request)
+
+            var response: Response? = null
+            try {
+                response = chain.proceed(request)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            if (response == null) {
+                // If the response is null, return a custom error response
+                val customBody = InstantSchedulesResponse(null, ErrorCode.INTERNET.message, ErrorCode.INTERNET.code)
+                // Convert the custom object to a JSON JSONObject
+                val responseBodyString = Gson().toJson(customBody)
+                val contentType: MediaType? = MediaType.get("application/json")
+                val body: ResponseBody = ResponseBody.create(contentType, responseBodyString)
+
+                return Response.Builder()
+                    .request(request)
+                    .code(200)
+                    .message(ErrorCode.INTERNET.message)
+                    .body(body)
+                    .build()
+            }
+
             val customResponseBuilder = response.newBuilder()
             return try {
                 if (response.isSuccessful) {
@@ -62,7 +85,7 @@ object KiaApiClient {
 
                     customResponseBuilder
                         .request(request)
-                        .code(response.code()) // or any other error code you want to simulate
+                        .code(200) // or any other error code you want to simulate
                         .message(response.message())
                         .body(body)
                         .build()

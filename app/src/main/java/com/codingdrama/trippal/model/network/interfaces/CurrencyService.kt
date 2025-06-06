@@ -1,7 +1,6 @@
 package com.codingdrama.trippal.model.network.interfaces
 
-import com.codingdrama.trippal.model.network.data.CurrencyDetailsResponse
-import com.codingdrama.trippal.model.network.data.CurrencyResponse
+import com.codingdrama.trippal.model.network.data.CurrencyDataResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,7 +10,7 @@ import retrofit2.http.Query
  */
 interface CurrencyService {
     @GET("currencies")
-    suspend fun getSupportedCurrencies(): CurrencyDetailsResponse?
+    suspend fun getSupportedCurrencies(): CurrencyDataResponse?
 
     /**
      * Example of a latest rate request:
@@ -19,7 +18,7 @@ interface CurrencyService {
      * currencies : A list of comma separated currency codes which you want to get (EUR,USD,CAD) By default all available currencies will be show (e.g. EUR,GBP)
      */
     @GET("latest")
-    suspend fun getLatestRate(@Query("base_currency") baseCurrency: String, @Query("currencies") currencies: String): CurrencyResponse?
+    suspend fun getLatestRate(@Query("base_currency") baseCurrency: String, @Query("currencies") currencies: String): CurrencyDataResponse?
 
     /**
      * Example of a historical rate request:
@@ -28,5 +27,5 @@ interface CurrencyService {
      * currencies : A list of comma separated currency codes which you want to get (EUR,USD,CAD) By default all available currencies will be show (e.g. EUR,GBP)
      */
     @GET("historical")
-    suspend fun getHistoricalRate(@Query("date") date: String, @Query("base_currency") baseCurrency: String, @Query("currencies") currencies: String): CurrencyResponse?
+    suspend fun getHistoricalRate(@Query("date") date: String, @Query("base_currency") baseCurrency: String, @Query("currencies") currencies: String): CurrencyDataResponse?
 }
