@@ -25,11 +25,14 @@ class FlightMainViewModel (private val repository: FlightInfoRepository) : ViewM
     private val _instantSchedulesArrive = MutableStateFlow<InstantSchedules?>(null)
     val instantSchedulesArrive: StateFlow<InstantSchedules?> = _instantSchedulesArrive.asStateFlow()
 
+    private val _lineTypeCheckStatus = MutableStateFlow(Pair(true, true))
+    val lineTypeCheckStatus: StateFlow<Pair<Boolean, Boolean>> = _lineTypeCheckStatus.asStateFlow()
+
     init {
         // create a task to getFlightInfo every 10 seconds
         viewModelScope.launch(Dispatchers.IO) {
             while (true) {
-                if (System.currentTimeMillis() - lastUpdateTime.value < 10000) {
+                if (System.currentTimeMillis() - lastUpdateTime.value < 1000000000) {
 //                    Log.d(TAG, "Skipping fetch, last update was less than 10 seconds ago.")
                     continue
                 }
@@ -40,6 +43,14 @@ class FlightMainViewModel (private val repository: FlightInfoRepository) : ViewM
                 delay(10000) // 10 seconds
             }
         }
+    }
+
+    /**
+     * domestic, international
+     */
+    fun setLineTypeCheckStatus(domesticChecked: Boolean, internationalChecked: Boolean) {
+        _lineTypeCheckStatus.value = Pair(domesticChecked, internationalChecked)
+        Log.d(TAG, "Line type check status updated: $domesticChecked, $internationalChecked")
     }
 
     fun getFlightInfoArrives() {

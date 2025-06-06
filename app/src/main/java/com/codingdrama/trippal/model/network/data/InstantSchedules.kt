@@ -57,7 +57,8 @@ data class InstantSchedule(
     val airPlaneType: String,
     val airBoardingGate: String,
     val airFlyStatus: String,
-    val airFlyDelayCause: String
+    val airFlyDelayCause: String,
+    var airLineType: Int // 0: domestic, 1: international
 )
 
 data class InstantSchedules (

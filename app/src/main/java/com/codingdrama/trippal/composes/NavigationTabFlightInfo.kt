@@ -99,6 +99,7 @@ fun AppNavHost(
 fun DeparturesScreen(modifier: Modifier = Modifier, flightViewModel: FlightMainViewModel) {
     val state = rememberPullToRefreshState()
     val instantSchedulesDeparture by flightViewModel.instantSchedulesDeparture.collectAsState()
+    val lineTypeCheckStatus by flightViewModel.lineTypeCheckStatus.collectAsState()
 
     if (instantSchedulesDeparture == null || instantSchedulesDeparture?.instantSchedules?.isEmpty() == true) {
         NoFlightInformationBox(modifier)
@@ -106,6 +107,18 @@ fun DeparturesScreen(modifier: Modifier = Modifier, flightViewModel: FlightMainV
     }
 
     var isRefreshing by remember { mutableStateOf(false) }
+    val displayList = instantSchedulesDeparture?.instantSchedules?.filter {
+        if (lineTypeCheckStatus.first && lineTypeCheckStatus.second) {
+            true // Show both domestic and international flights
+        } else if (lineTypeCheckStatus.first) {
+            it.airLineType == 1 // Show only domestic flights
+        } else if (lineTypeCheckStatus.second) {
+            it.airLineType == 0 // Show only international flights
+        } else {
+            false // Show no flights
+        }
+    } ?: emptyList()
+
     PullToRefreshBox(
         state = state,
         isRefreshing = isRefreshing,
@@ -117,8 +130,8 @@ fun DeparturesScreen(modifier: Modifier = Modifier, flightViewModel: FlightMainV
         modifier = modifier
     ) {
         LazyColumn {
-            items(instantSchedulesDeparture?.instantSchedules!!.size) { index ->
-                val flightInfo = instantSchedulesDeparture?.instantSchedules!![index]
+            items(displayList.size) { index ->
+                val flightInfo = displayList[index]
                 CardFlightInfo(instantSchedule = flightInfo, cardType = CardType.DEPARTURE)
             }
         }
@@ -130,6 +143,7 @@ fun DeparturesScreen(modifier: Modifier = Modifier, flightViewModel: FlightMainV
 fun ArrivesScreen(modifier: Modifier = Modifier, flightViewModel: FlightMainViewModel) {
     val state = rememberPullToRefreshState()
     val instantSchedulesArrive by flightViewModel.instantSchedulesArrive.collectAsState()
+    val lineTypeCheckStatus by flightViewModel.lineTypeCheckStatus.collectAsState()
 
     if (instantSchedulesArrive == null || instantSchedulesArrive?.instantSchedules?.isEmpty() == true) {
         NoFlightInformationBox(modifier)
@@ -137,6 +151,18 @@ fun ArrivesScreen(modifier: Modifier = Modifier, flightViewModel: FlightMainView
     }
 
     var isRefreshing by remember { mutableStateOf(false) }
+    val displayList = instantSchedulesArrive?.instantSchedules?.filter {
+        if (lineTypeCheckStatus.first && lineTypeCheckStatus.second) {
+            true // Show both domestic and international flights
+        } else if (lineTypeCheckStatus.first) {
+            it.airLineType == 1 // Show only domestic flights
+        } else if (lineTypeCheckStatus.second) {
+            it.airLineType == 0 // Show only international flights
+        } else {
+            false // Show no flights
+        }
+    } ?: emptyList()
+
     PullToRefreshBox(
         state = state,
         isRefreshing = isRefreshing,
@@ -148,8 +174,8 @@ fun ArrivesScreen(modifier: Modifier = Modifier, flightViewModel: FlightMainView
         modifier = modifier
     ) {
         LazyColumn {
-            items(instantSchedulesArrive?.instantSchedules!!.size) { index ->
-                val flightInfo = instantSchedulesArrive?.instantSchedules!![index]
+            items(displayList.size) { index ->
+                val flightInfo = displayList[index]
                 CardFlightInfo(instantSchedule = flightInfo, cardType = CardType.ARRIVAL)
             }
         }
