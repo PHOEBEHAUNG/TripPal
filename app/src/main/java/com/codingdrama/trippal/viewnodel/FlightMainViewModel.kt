@@ -35,6 +35,7 @@ class FlightMainViewModel (private val repository: FlightInfoRepository) : ViewM
                 }
 
                 Log.d(TAG, "Fetching flight info...")
+                _lastUpdateTime.value = System.currentTimeMillis()
                 getFlightInfoArrives()
                 getFlightInfoDepartures()
                 delay(10000) // 10 seconds
@@ -44,7 +45,6 @@ class FlightMainViewModel (private val repository: FlightInfoRepository) : ViewM
 
     fun getFlightInfoArrives() {
         viewModelScope.launch {
-            _lastUpdateTime.value = System.currentTimeMillis()
             _instantSchedulesArrive.value = repository.getFlightInfoArrive()
             Log.d(TAG, "Flight Info Arrives: ${_instantSchedulesArrive.value?.instantSchedules?.size}")
         }
@@ -52,7 +52,6 @@ class FlightMainViewModel (private val repository: FlightInfoRepository) : ViewM
 
     fun getFlightInfoDepartures() {
         viewModelScope.launch {
-            _lastUpdateTime.value = System.currentTimeMillis()
             _instantSchedulesDeparture.value = repository.getFlightInfoDeparture()
             Log.d(TAG, "Flight Info Departures: ${_instantSchedulesDeparture.value?.instantSchedules?.size}")
         }
