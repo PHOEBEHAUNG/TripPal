@@ -5,14 +5,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codingdrama.trippal.model.network.data.InstantSchedules
 import com.codingdrama.trippal.repository.FlightInfoRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FlightMainViewModel (private val repository: FlightInfoRepository) : ViewModel() {
+@HiltViewModel
+class FlightMainViewModel @Inject constructor(private val repository: FlightInfoRepository) : ViewModel() {
     companion object {
         private const val TAG = "FlightMainViewModel"
     }

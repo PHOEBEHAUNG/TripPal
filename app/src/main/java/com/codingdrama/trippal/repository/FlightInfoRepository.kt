@@ -3,8 +3,9 @@ package com.codingdrama.trippal.repository
 import com.codingdrama.trippal.model.network.KiaApiClient
 import com.codingdrama.trippal.model.network.ErrorCode
 import com.codingdrama.trippal.model.network.data.InstantSchedules
+import javax.inject.Inject
 
-class FlightInfoRepository (private val apiClient: KiaApiClient) {
+class FlightInfoRepository @Inject constructor(private val apiClient: KiaApiClient) {
     suspend fun getFlightInfoArrive(): InstantSchedules {
         val domestic = apiClient.kiaApiService.getFlightInfoDomesticArrive()
         val international = apiClient.kiaApiService.getFlightInfoInternationalArrive()

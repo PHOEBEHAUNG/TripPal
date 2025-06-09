@@ -6,14 +6,17 @@ import androidx.lifecycle.viewModelScope
 import com.codingdrama.trippal.data.CurrencyEnum
 import com.codingdrama.trippal.model.network.data.CurrencyDetailsResponse
 import com.codingdrama.trippal.repository.CurrencyRateRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RateViewModel(private val repository: CurrencyRateRepository) : ViewModel() {
+@HiltViewModel
+class RateViewModel @Inject constructor(private val repository: CurrencyRateRepository) : ViewModel() {
     companion object {
         private const val TAG = "RateViewModel"
     }

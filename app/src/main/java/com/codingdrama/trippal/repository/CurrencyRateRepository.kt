@@ -5,8 +5,9 @@ import com.codingdrama.trippal.model.network.CurrencyApiClient
 import com.codingdrama.trippal.model.network.data.CurrencyDetailsResponse
 import com.codingdrama.trippal.model.network.data.CurrencyResponse
 import com.google.gson.Gson
+import javax.inject.Inject
 
-class CurrencyRateRepository(private val apiClient: CurrencyApiClient) {
+class CurrencyRateRepository @Inject constructor(private val apiClient: CurrencyApiClient) {
     suspend fun getSupportedCurrencies(): CurrencyDetailsResponse? {
         val response = apiClient.currencyApiService.getSupportedCurrencies()
         if (response?.data != null) {

@@ -4,13 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,33 +18,29 @@ import com.codingdrama.trippal.composes.BottomNavigationBar
 import com.codingdrama.trippal.composes.FlightScreen
 import com.codingdrama.trippal.composes.RateScreen
 import com.codingdrama.trippal.composes.Screen
-import com.codingdrama.trippal.model.network.CurrencyApiClient
-import com.codingdrama.trippal.model.network.KiaApiClient
-import com.codingdrama.trippal.repository.CurrencyRateRepository
-import com.codingdrama.trippal.repository.FlightInfoRepository
 import com.codingdrama.trippal.ui.theme.TripPalTheme
 import com.codingdrama.trippal.viewnodel.FlightMainViewModel
 import com.codingdrama.trippal.viewnodel.RateViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    val flightViewModel: FlightMainViewModel = FlightMainViewModel(FlightInfoRepository(KiaApiClient))
-    val rateViewModel: RateViewModel = RateViewModel(CurrencyRateRepository(CurrencyApiClient))
+    private val flightViewModel: FlightMainViewModel by viewModels()
+    private val rateViewModel: RateViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
-            LaunchedEffect(Unit) {
-                // Initialize the data when the app starts
-            }
             TripPalTheme {
-                MainScreen()
+                MainScreen(rateViewModel, flightViewModel)
             }
         }
     }
 
     @Composable
-    fun MainScreen() {
+    fun MainScreen(viewModel: RateViewModel, flightViewModel: FlightMainViewModel) {
         val navController = rememberNavController()
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -68,12 +63,12 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Preview(showBackground = true)
-    @Composable
-    fun MainScreenPreview() {
-        TripPalTheme {
-            MainScreen()
-        }
-    }
+//    @Preview(showBackground = true)
+//    @Composable
+//    fun MainScreenPreview() {
+//        TripPalTheme {
+//            MainScreen()
+//        }
+//    }
 }
 
