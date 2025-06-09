@@ -47,8 +47,7 @@ fun NavigationTabFlightInfo(modifier: Modifier = Modifier, flightViewModel: Flig
     Scaffold(modifier = modifier) { contentPadding ->
         Column {
             PrimaryTabRow(
-                selectedTabIndex = selectedDestination,
-                modifier = modifier.padding(contentPadding)
+                selectedTabIndex = selectedDestination
             ) {
                 Destination.entries.forEachIndexed { index, destination ->
                     Tab(
